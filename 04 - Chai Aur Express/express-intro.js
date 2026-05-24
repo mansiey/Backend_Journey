@@ -91,8 +91,46 @@ function block1_basicServer() {
     })
 }
 
+function block2_basicServer(){
+    return new Promise((resolve) => {
+        const app = express();
+
+        //response types
+        app.get('/text', (req, res) => {
+            res.send("Hello From ChaiCode")
+        })
+
+        app.get('/json', (req, res) => {
+            res.json({
+                fremwork: 'express',
+                version: '6.2.1'
+            })
+        })
+
+        app.get('/not-found', (req, res) => {
+            res.status(404).json({
+                error: "Page not found"
+            })
+        })
+
+        app.get('/health', (req, res) => {
+            res.status(200)
+        })
+
+        app.get('/old-menu', (req, res) => {
+            res.redirect(301, '/new-menu')
+        })
+
+        app.get('/xml', (req, res) => {
+            res.type('/application/xml').send(<dish> <name> Biryani </name></dish>)
+        })
+
+    })
+}
+
 async function main() {
     await block1_basicServer();
+    await block2_basicServer();
 
     process.exit(0);
 }
