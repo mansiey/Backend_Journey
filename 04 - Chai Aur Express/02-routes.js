@@ -85,6 +85,26 @@ function block1_httpMethods(){
         res.status(204).end();       //better 
     }) 
 
+
+    
+    //Wildcard syntax-1: file handling
+
+    app.get('/files/*filepath', (req, res) => {
+        const filepath = req.params.filepath;
+        res.json({filepath, type: "wildcard"})
+    })
+
+    //Wildcard syntax-2: all method handling
+
+    app
+        .route('/schedule')
+        .get((req, res) => {})
+        .post((req, res) => {})
+        .put((req, res) => {})
+        .patch((req, res) => {})
+
+
+
     const server = app.listen(0, async () => {
         const PORT = server.address().port;
         const base = `http://127.0.0.1:${base}`;
