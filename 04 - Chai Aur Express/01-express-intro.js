@@ -91,7 +91,7 @@ function block1_basicServer() {
     })
 }
 
-function block2_basicServer(){
+function block2_responses(){
     return new Promise((resolve) => {
         const app = express();
 
@@ -122,7 +122,12 @@ function block2_basicServer(){
         })
 
         app.get('/xml', (req, res) => {
-            res.type('/application/xml').send(<dish> <name> Biryani </name></dish>)
+            res.type('/application/xml').send(`<dish> <name> Biryani </name></dish>`)
+        })
+
+        const server = app.listen(0, async() => {
+            const PORT = server.address().port();
+            const base = `http://127.0.0.1:${PORT}`;
         })
 
     })
@@ -130,7 +135,7 @@ function block2_basicServer(){
 
 async function main() {
     await block1_basicServer();
-    await block2_basicServer();
+    await block2_responses();
 
     process.exit(0);
 }
