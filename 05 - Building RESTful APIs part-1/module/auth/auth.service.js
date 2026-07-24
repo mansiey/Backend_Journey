@@ -114,6 +114,9 @@ const forgot_password = async ({email}) => {
 }
 
 const new_password = async (token) => {
+    //take token from user and verify from DB
+
+    //take new password and update in the DB
     
 }
 export { register };
