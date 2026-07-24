@@ -14,6 +14,14 @@ class ApiError extends Error {
         throw new ApiError(400, message);
     }
 
+    static forbidden(message = 'Forbidden'){
+        throw new ApiError(400, message);
+    }
+
+    static notfound(message = 'Not-Found'){
+        throw new ApiError(400, message);
+    }
+
     static conflict(message = 'Conflict -User already exists!'){
         throw new ApiError(409, message);
     }
