@@ -8,6 +8,8 @@ import {
 } from "../../src/common/utils/jwt.utils.js";
 import User from "./auth.model.js";
 
+
+
 const hashToken = (token) => {
   return crypto.createHash("sha256").update(rawToken).digest("hex");
 };
@@ -16,7 +18,7 @@ const register = async ({ name, email, password, role }) => {
   const existing = await User.findOne({ email });
 
   if (existing)
-    throw ApiError.conflict("Email( with this user already exists!");
+    throw ApiError.conflict("Email with this user already exists!");
 
   const { rawToken, hashedToken } = generateResetToken();
 
@@ -27,6 +29,9 @@ const register = async ({ name, email, password, role }) => {
     role,
     verificationToken: hashedToken,
   });
+
+  console.log(user);
+  console.log(typeof user);
 
   //TODO : send an email to the user with token : rawToken
 
@@ -50,6 +55,7 @@ const login = async ({ email, password }) => {
   }
 
   //somehow i checked password
+
   if (!user.isVerified) {
     throw ApiError.forbidden("Please verify your email before login");
   }
@@ -73,6 +79,7 @@ const login = async ({ email, password }) => {
 
 const refresh = async (token) => {
   if (!token) throw ApiError.unauthorized("Token is missing!");
+  
   const decoded = verifyRefreshToken(token);
 
   const user = await User.findById(decoded.id).select("+refreshToken");
