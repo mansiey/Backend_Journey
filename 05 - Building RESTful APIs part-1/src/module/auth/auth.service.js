@@ -8,6 +8,7 @@ import {
 } from "../../src/common/utils/jwt.utils.js";
 
 import User from "./auth.model.js";
+import { verificationEmail } from "../../common/config/email.js";
 
 
 
@@ -35,6 +36,11 @@ const register = async ({ name, email, password, role }) => {
   console.log(typeof user);
 
   //TODO : send an email to the user with token : rawToken
+  try{
+    await verificationEmail(email, rawToken);
+  } catch(err){
+    console.error(err);
+  }
 
   //if there's some data about user that i don't want from the DB
   const userObj = user.toObject();
@@ -43,6 +49,19 @@ const register = async ({ name, email, password, role }) => {
 
   return user;
 };
+
+const verifyEmail = async (token) => {
+  const hashedToken = hashToken(token);
+  const user = await User.findOne({verificationToken: hashedToken}).select("+verificationToken");
+
+  if(!user) throw ApiError.notfound("Invalid or expired verification link!");
+
+  user.isVerified = true;
+  user.verificationToken = undefined;
+  await user.save()
+
+  return user;
+}
 
 const login = async ({ email, password }) => {
   //take email and check if user exists in DB
@@ -88,11 +107,12 @@ const refresh = async (token) => {
   const user = await User.findById(decoded.id).select("+refreshToken");
   if (!user) throw ApiError.unauthorized("User not found!");
 
-  if (refreshToken !== hashToken(token)) {
+  if (user.refreshToken !== hashToken(token)) {
     throw ApiError.unauthorized("Invalid refresh token");
   }
 
   const accessToken = generateAccessToken({ id: user._id });
+  const refreshToken = generateRefreshToken({ id: user._id });
 
   user.refreshToken = hashToken(refreshToken);
   await user.save({ validateBeforeSave: false });
@@ -135,4 +155,4 @@ const getMe = async (userId) => {
 
   return user;
 }
-export { hashToken, register, login, refresh, logout, forgot_password, new_password };
+export { hashToken, register, verifyEmail, login, refresh, logout, forgot_password, new_password };

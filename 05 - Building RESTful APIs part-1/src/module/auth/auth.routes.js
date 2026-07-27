@@ -9,6 +9,8 @@ const router = Router();
 
 router.post('/register', validate(RegisterDto), controller.register);
 
+router.get('/verifyEmail', controller.verifyEmail);
+
 router.post('/login', validate(LoginDto), controller.login);
 
 router.post('/logout', authenticate, controller.logout);

@@ -38,4 +38,10 @@ const getMe = async (req, res) => {
   APIResponses.ok(res, "This is the requested Profile", user);
 }
 
-export { register, login, logout, getMe };
+const verifyEmail = async (req, res) => {
+  const user = await authService.verifyEmail(req.params.token);
+
+  APIResponses.ok(res, "Verification success", user);
+}
+
+export { register, login, logout, getMe, verifyEmail };
