@@ -128,4 +128,11 @@ const new_password = async (token) => {
   //take token from user and verify from DB
   //take new password and update in the DB
 };
-export { register };
+
+const getMe = async (userId) => {
+  const user = await User.findById(userId);
+  if(!user) throw ApiError.notfound("User not found!");
+
+  return user;
+}
+export { hashToken, register, login, refresh, logout, forgot_password, new_password };
