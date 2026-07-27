@@ -6,6 +6,7 @@ import {
   generateResetToken,
   verifyRefreshToken,
 } from "../../src/common/utils/jwt.utils.js";
+
 import User from "./auth.model.js";
 
 
@@ -55,6 +56,8 @@ const login = async ({ email, password }) => {
   }
 
   //somehow i checked password
+  const isMatch = user.comparePassword(password);
+  if(!isMatch) throw new ApiError.unauthorized("Invalid email or password!");
 
   if (!user.isVerified) {
     throw ApiError.forbidden("Please verify your email before login");
@@ -79,7 +82,7 @@ const login = async ({ email, password }) => {
 
 const refresh = async (token) => {
   if (!token) throw ApiError.unauthorized("Token is missing!");
-  
+
   const decoded = verifyRefreshToken(token);
 
   const user = await User.findById(decoded.id).select("+refreshToken");
