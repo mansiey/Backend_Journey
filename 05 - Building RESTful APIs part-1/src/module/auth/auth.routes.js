@@ -4,6 +4,7 @@ import validate from "../../common/middleware/validate.middleware.js";
 import RegisterDto from "./dto/register.dto.js";
 import { authenticate } from "./auth.middleware.js";
 import LoginDto from "./dto/login.dto.js";
+import ForgotPasswordDto from "./dto/forgot-password.dto.js";
 
 const router = Router();
 
@@ -16,5 +17,7 @@ router.post('/login', validate(LoginDto), controller.login);
 router.post('/logout', authenticate, controller.logout);
 
 router.get('/profile', authenticate, controller.getMe);
+
+router.post('/forgotPassword', validate(ForgotPasswordDto), controller.forgot_password);
 
 export default router;

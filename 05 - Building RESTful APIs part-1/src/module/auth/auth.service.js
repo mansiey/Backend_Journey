@@ -139,14 +139,46 @@ const forgot_password = async ({ email }) => {
   user.resetPasswordToken = hashedToken;
   user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
 
-  await user.save({ validateBeforeSave: false });
+  await user.save();
 
   //TODO : mail bhejna nahi aata
+  try{
+    await sendResetPasswordEmail(email, rawToken);
+  } catch(err){
+    console.error(err);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+
+    await user.save();
+
+    throw ApiError.internal("Failed to send the reset password email.")
+  }
+
+    res.status(200).json({
+      status: success,
+      message: "Successfully sent the reset-password link"
+    })
+
 };
 
-const new_password = async (token) => {
+const new_password = async (token, password) => {
   //take token from user and verify from DB
-  //take new password and update in the DB
+  const hashedToken = hashToken(token);
+  const user = await User.findOne({
+    resetPasswordToken: hashedToken,
+    resetPasswordExpires: {$gt: Date.now()}
+  });
+
+  if(!user) throw ApiError.notfound("Invalid or expired token");
+
+  //if user found => take new password and update in the DB
+  user.password = password;
+
+  //now the toke is used, mark it undefind so it won't be used again
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
+  
+  user.save();
 };
 
 const getMe = async (userId) => {

@@ -22,8 +22,12 @@ class ApiError extends Error {
         throw new ApiError(400, message);
     }
 
-    static conflict(message = 'Conflict -User already exists!'){
+    static conflict(message = 'Conflict: User already exists!'){
         throw new ApiError(409, message);
+    }
+
+    static internal(message = 'Internal issue'){
+        throw new ApiError(400, message);
     }
 }
 
