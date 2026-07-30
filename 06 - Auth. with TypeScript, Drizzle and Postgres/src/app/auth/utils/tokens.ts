@@ -1,6 +1,6 @@
 import JWT from 'jsonwebtoken';
 
-interface userTokenPayload{
+interface userTokenPayload {
     id: string
 }
 
@@ -11,10 +11,10 @@ export function createUserToken(payload: userTokenPayload) {
 }
 
 export function verifyToken(token: string) {
-    try{
+    try {
         const payload = JWT.verify(token, JWT_SECRET) as userTokenPayload;
-    return payload;
-    } catch (error){
+        return payload;
+    } catch (error) {
         return null;      //for expired token
     }
 }
