@@ -1,6 +1,9 @@
 import type { Request, Response, NextFunction } from 'express';
 import { verifyToken } from '../auth/utils/tokens.js';
+import { error } from 'node:console';
 
+
+//This one does not restrict any user
 export function authMiddleware() {
     return function(req: Request, res: Response, next: NextFunction){
         const header = req.headers['authorization'];
@@ -18,6 +21,19 @@ export function authMiddleware() {
         const user = verifyToken(token);
         //@ts-ignore
         req.user = user;
+        next();
+    }
+}
+
+export function restrictToAuthenticatedUser(){
+    return function(req: Request, res: Response, next: NextFunction){
+        // @ts-ignore
+        if(!req.user){
+            return res.status(401).json({
+                error: "Authentication Required!"
+            })
+        }
+
         next();
     }
 }
