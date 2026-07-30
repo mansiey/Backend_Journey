@@ -4,6 +4,7 @@ import { db } from '../../db/index.js';
 import { usersTable } from '../../db/schema.js';
 import { eq } from 'drizzle-orm';
 import { createHmac, randomBytes } from 'node:crypto';
+import { createUserToken } from './utils/tokens.js';
 
 
 class AuthenticationController {
@@ -75,10 +76,12 @@ class AuthenticationController {
             })
         }
 
-        //TODO : token banao
+        //TODO : token banao : done
+        const token = createUserToken({ id: userResult.id });
+
         return res.json({
             message: 'Signin Success',
-            data: {token : 1},
+            data: { token },
         })
     }
 
