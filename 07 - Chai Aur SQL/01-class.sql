@@ -14,5 +14,8 @@
 -- );
 
 --How to add/remove column in the DB
-ALTER TABLE students
-ADD COLUMN batch_name VARCHAR(50) DEFAULT 'web-dev 2026';
+-- ALTER TABLE students
+-- ADD COLUMN batch_name VARCHAR(50) DEFAULT 'web-dev 2026';
+
+INSERT INTO students (first_name, last_name, email, phone_number, age, current_status, masterji_handle, has_joined_masterji, current_score)
+VALUES ('John', 'Doe', 'john.doe@example.com', '9876543210', 22, 'active', '@john_codes', TRUE, 85.50);
