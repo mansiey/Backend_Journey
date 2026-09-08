@@ -40,7 +40,10 @@ import fs from 'fs';
 //     console.log("File Deleted!");
 // })
 
+
 // fs.rm("myFolder", {recursive: true});
+
+// fs.rm("mainFolder", {recursive: true});
 
 
 
@@ -57,4 +60,4 @@ import fs from 'fs';
 
 // ****** 5. Copy a file ******
 
-fs.cpSync("testRename.txt", "copyTest.txt");
+// fs.cpSync("testRename.txt", "copyTest.txt");
