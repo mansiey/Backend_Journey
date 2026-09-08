@@ -40,6 +40,11 @@ import fs from 'fs';
 //     console.log("File Deleted!");
 // })
 
+// fs.rm("myFolder", {recursive: true});
+
+
+
+
 
 // ***** 4. Rename a file ******
 
@@ -47,3 +52,9 @@ import fs from 'fs';
 
 // fs.renameSync("test1.txt", "testRename.txt");
 // console.log("Successfully renamed the file!");
+
+
+
+// ****** 5. Copy a file ******
+
+fs.cpSync("testRename.txt", "copyTest.txt");
