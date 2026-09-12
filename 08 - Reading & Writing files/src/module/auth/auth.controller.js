@@ -1,4 +1,4 @@
-import APIResponses from "../../src/common/utils/api-res.js";
+import APIResponses from "../../common/utils/api-res.js";
 import * as authService from "./auth.service.js";
 
 const register = async (req, res) => {
