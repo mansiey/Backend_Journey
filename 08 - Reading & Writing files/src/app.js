@@ -17,7 +17,8 @@ app.use('/api/auth', authRoutes);
 
 
 
-//to preserve the extension
+//to preserve the extension in disk storage
+
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, "public/uploads")
@@ -29,13 +30,51 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({ storage });
 
-app.post("/profile", upload.single("profilePicture"), (req, res) => {
-    const getFile = req.file;
-    console.log(getFile);
+//by default the memory storage is used, but to use it explicitely,
 
-    APIResponses.ok(res, "File uploaded successfully!");
+// const storage = multer.memoryStorage();
+
+
+
+// const upload = multer({ storage });
+
+//single() method 
+
+// app.post("/profile", upload.single("profilePicture"), (req, res) => {
+//     const getFile = req.file;
+//     console.log(getFile);
+
+//     APIResponses.ok(res, "File uploaded successfully!");
+// })
+
+//array() method
+
+// app.post("/photos", upload.array("photos"), (req, res) => {
+//     const getFiles = req.files;
+//     console.log(getFiles);
+
+//     APIResponses.ok(res, "Photos Uploaded!");
+// })
+
+
+
+
+
+
+// file size limit
+
+const upload = multer({storage, limits: {
+    fileSize: 1024 * 1024 * 2
+}})
+app.post('/profile', (req, res) => {
+    upload.single("profilePicture")(req, res, (err) => {
+        if(err?.code === "LIMIT_FILE_SIZE"){
+            return res.send("FIle size too large!");
+        }
+
+        return res.send("File uploaded!");
+    })
 })
 
 
