@@ -71,3 +71,24 @@ SELECT name, nicknames, auction_price_crores
 FROM ipl_players
 ORDER BY auction_price_crores DESC
 LIMIT 10 OFFSET 20;
+
+
+
+-- MODIFYING DATA AT RUNTIME
+
+SELECT name, nicknames, auction_price_crores,
+(auction_price_crores * 100) AS auction_price_lakhs FROM ipl_players;
+
+
+-- TO GET DISTINCT VALUES
+
+SELECT DISTINCT role FROM ipl_players;
+
+
+-- DQL
+
+
+SELECT team, SUM(runs_scored) AS total_run
+FROM ipl_players
+GROUP BY team 
+HAVING SUM(runs_scored) > 2;
