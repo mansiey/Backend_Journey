@@ -52,3 +52,22 @@ SELECT name, nicknames, auction_price_crores FROM ipl_players ORDER BY auction_p
 
 SELECT team, name, auction_price_crores FROM ipl_players ORDER BY team ASC, auction_price_crores DESC;
 
+
+-- *** PAGINATION
+
+SELECT name, nicknames, auction_price_crores
+FROM ipl_players
+ORDER BY auction_price_crores DESC
+LIMIT 10;
+
+
+SELECT name, nicknames, auction_price_crores
+FROM ipl_players
+ORDER BY auction_price_crores DESC
+LIMIT 10 OFFSET 10;
+
+
+SELECT name, nicknames, auction_price_crores
+FROM ipl_players
+ORDER BY auction_price_crores DESC
+LIMIT 10 OFFSET 20;
