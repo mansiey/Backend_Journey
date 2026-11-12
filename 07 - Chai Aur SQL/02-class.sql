@@ -13,7 +13,8 @@
 -- ADD COLUMN nicknames VARCHAR(50);
 
 
--- -- Inserting Data (Mix of real and funny fictitious stats)
+-- -- *** Inserting Data (Mix of real and funny fictitious stats)
+
 -- INSERT INTO ipl_players (name, team, role, runs_scored, wicket_taken, auction_price_crores, nicknames) VALUES
 -- ('Virat Kohli', 'RCB', 'Batsman', 973, 1, 15.00, 'King Kohli'),
 -- ('MS Dhoni', 'CSK', 'Wicketkeeper', 450, 1, 12.00, 'Thala'),
