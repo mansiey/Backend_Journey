@@ -32,3 +32,37 @@ INSERT INTO entrance (id, centre) VALUES
  
 SELECT * FROM entrance;
 
+--- **  JOINs **
+
+SELECT batches.subjects, entrance. centre
+FROM batches JOIN entrance
+ON batches.student_id = entrance.id;
+
+
+
+--- ** TYPES OF JOIN **
+
+
+-- 1. INNER JOIN
+SELECT *
+FROM batches INNER JOIN entrance
+ON batches.student_id = entrance.id;
+
+
+-- 2. LEFT JOIN
+SELECT *
+FROM batches LEFT JOIN entrance
+ON batches.student_id = entrance.id;
+
+
+-- 3. RIGHT JOIN
+SELECT *
+FROM batches RIGHT JOIN entrance
+ON batches.student_id = entrance.id;
+
+
+
+-- 4. FULL OUTER JOIN
+SELECT *
+FROM batches FULL OUTER JOIN entrance
+ON batches.student_id = entrance.id;
