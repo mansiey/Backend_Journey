@@ -10,3 +10,10 @@ INSERT INTO marks (name, marks) VALUES
 ('Ashtosh', '49'),
 ('Nisarg', '45'),
 ('Anu', '50');
+
+SELECT * FROM marks;
+
+
+CREATE INDEX idx_name ON marks(name);
+
+EXPLAIN ANALYZE SELECT * FROM marks WHERE name = 'Mansi';
